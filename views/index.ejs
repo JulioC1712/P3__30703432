@@ -1,13 +1,37 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>P3_30703432</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <title>Inicio de Sesion</title>
+</head>
   <body>
-    <h1>Hola mundo</h1>
-    <p>Julio Charmelo</p>
-    <p>C.I. 30.703.432</p>
-    <p>Seccion 2</p>
+    <header>
+    </header>
+    <div class="container">
+    <form name="formulario" action="/login" method="post">
+        <table class="form-register">
+          <caption align="top"><h1>Tienda Fitness</h1></caption>
+          <tr>
+            <td class="texto"><h4>Usuario:</h4></td>
+          </tr>
+          <tr>
+              <td><input class="control" type="text" name="user" id="user" maxlength="20" placeholder="Ingrese el Usuario" required></td>
+          </tr> 
+          <tr>
+            <td class="texto"><h4>Contraseña:</h4></td>
+          </tr>
+          <tr>
+              <td><input class="control" type="password" name="password" id="password" minlength="6" maxlength="10" placeholder="Ingrese la Contraseña" required></td>
+          </tr>
+        </table>
+        <input class="botons" type="submit" value="Iniciar Sesión">
+    </form>
+  </div>
+    <footer>
+      <span class="copyright">Todos los derechos reservados</span>
+    </footer>
   </body>
 </html>

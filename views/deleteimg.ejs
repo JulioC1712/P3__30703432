@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/aggimg.css">
+    <title>Eliminar Imagen</title>
+</head>
+<body>
+    <div>
+        <h1>¿Está seguro de eliminar esta Imagen?</h1>
+        <form action="/deleteimg/<%= imagenes.id %>" method="get">
+            <img src="<%= imagenes.url %>">
+            <h4><%= imagenes.destacado %></h4>
+            <button type="submit" class="btn btn-primary">Eliminar Imagen</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+body{
+  background-color: #d1d1d1;
+}
+
+form {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #a0a0a0;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #a0a0a0;
+}
+
+select {
+  height: 30px;
+}
+
+button {
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#url {
+  margin-bottom: 10px;
+}
+
+#destacado {
+  margin-bottom: 10px;
+}
+
+#producto {
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #000;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+select {
+  border-radius: 5px;
+}
+
+select option {
+  color: #000;
+}
+
+h1{
+  text-align: center;
+}

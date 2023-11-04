@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/aggimg.css">
+    <title>Editar Imagen</title>
+</head>
+<body>
+    <h1>editar imagen</h1>
+    <div>
+        <form action="/updateimg/<%= imagenes.id %>" method="post">
+            <input type="text" name="url" id="url" value="<%= imagenes.url %>"  minlength="3">
+            <select name="destacado" id="destacado">
+                <option value="">--Seleccione--</option>
+                <option value="Si">Si</option>
+                <option value="No">NO</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Actualizar Imagen</button>
+        </form>
+    </div>
+</body>
+</html>

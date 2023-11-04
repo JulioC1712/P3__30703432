@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/aggprd.css">
+    <title>Agregar Producto</title>
+</head>
+<body>
+    <h1>Agregar producto</h1>
+    <div>
+        <form action="/aggprd" method="post">
+            <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre del producto" required maxlength="25" minlength="3">
+            <input type="number" name="codigo" id="codigo" placeholder="Ingrese el codigo del producto" required>
+            <input type="number" name="precio" id="precio" placeholder="Ingrese el precio del producto" required>
+            <input type="text" name="marca" id="marca" placeholder="Ingrese la marca del producto" required maxlength="25" minlength="4">
+            <input type="text" name="deporte" id="deporte" placeholder="Ingrese para que deporte esta hecho" required>
+            <select name="categoria" id="categoria">
+                <option value="" >--Seleccione--</option>
+                <% if (categorias) { %>
+                    <% for (let i = 0; i < categorias.length; i++){  %>
+                        <% if (categorias) { %>
+                            <option value="<%= categorias[i].id %>" id="categoria_id" name="categoria_id"><%= categorias[i].nombre %></option>
+    
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                            <option value="">No existen categorias en el sistema</option>
+                    <% }   %>
+            </select>
+            <input type="textarea" name="descripcion" id="descripcion" placeholder="Ingrese la descripcion del producto" maxlength="60" minlength="10">
+            <button type="submit" class="btn btn-primary">Subir Producto</button>
+        </form>
+    </div>
+</body>
+</html>

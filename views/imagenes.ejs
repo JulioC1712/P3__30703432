@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/img.css">
+    <title>Imagenes</title>
+</head>
+<body>
+    <h1>Pagina Imagenes  <%= imagenes.length %></h1>
+    <a href="/home">Home</a>
+    <a href="/categorias">Categorias</a>
+    <a href="/productos">Productos</a>
+    <a href="/imagenes">Imagenes</a>
+    <div>
+        <table border="1">
+            <caption>Imagenes</caption>
+            <tr>
+                <th>N°</th>
+                <th>Imagen</th>
+                <th>Destacado</th>
+                <td><a href="/imgagg">Agregar</a></td>
+            </tr>
+            <tr>
+                <% if (imagenes) { %>
+                    <% for (let i = 0; i < imagenes.length; i++){  %>
+                        <% if (imagenes) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><img src="<%= imagenes[i].url %>"></td>
+                                <td><%= imagenes[i].destacado %></td>
+                                <td> 
+                                    <div class="input-group">
+                                        <a href="/imgdelete/<%= imagenes[i].id%>" class="btn btn-danger">Eliminar</a>
+                                        <a href="/imgedit/<%= imagenes[i].id%>" class="btn btn-info">Actualizar</a>
+                                    </div>
+                                </td>
+                            </tr>    
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                        <tr>
+                            <th>No hay imagenes en el sistema</th>
+                        </tr>
+                    <% }   %>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

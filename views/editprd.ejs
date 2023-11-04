@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/aggprd.css">
+    <title>Editar Producto</title>
+</head>
+<body>
+    <h1>Actualizar Producto</h1>
+    <div>
+        <form action="/updateprd/<%= productos.id %>" method="post">
+            <input type="text" name="nombre" id="nombre" value="<%= productos.nombre %>" required maxlength="25" minlength="3">
+            <input type="number" name="codigo" id="codigo" value="<%= productos.codigo %>" required>
+            <input type="number" name="precio" id="precio" value="<%= productos.precio %>" required>
+            <input type="text" name="marca" id="marca" value="<%= productos.marca %>" required maxlength="25" minlength="4">
+            <input type="text" name="deporte" id="deporte" value="<%= productos.deporte %>" required>
+            <input type="textarea" name="descripcion" id="descripcion" value="<%= productos.descripcion %>" maxlength="60" minlength="10">
+            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+        </form>
+    </div>
+</body>
+</html>

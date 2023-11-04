@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/aggprd.css">
+    <title>Eliminar Producto</title>
+</head>
+<body>
+    <div>
+        <h1>¿Desea eliminar este producto?</h1>
+        <form action="/deleteprd/<%= productos.id %>" method="get">
+            <h4><%= productos.nombre %></h4>
+            <h4><%= productos.codigo %></h4>
+            <h4><%= productos.precio %></h4>
+            <h4><%= productos.marca %></h4>
+            <h4><%= productos.jugadores %></h4>
+            <h4><%= productos.descripcion %></h4>
+            <button type="submit" class="btn btn-primary">Eliminar Producto</button>
+        </form>
+    </div>
+</body>
+</html>
