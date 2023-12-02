@@ -1,78 +1,99 @@
 body {
-    background-color: #d1d1d1;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    width: 500px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .fail {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .fail h1 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #f00;
-  }
-  
-  .fail p {
-    font-size: 16px;
-    color: #000;
-  }
-  
-  .fail a {
-    background-color: #000;
-    color: #fff;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-  }
-  
-  @media (max-width: 500px) {
-    .container {
-      width: 100%;
-    }
-  
-    .fail {
-      position: relative;
-      top: 0;
-      left: 0;
-    }
-  
-    .fail h1 {
-      font-size: 16px;
-    }
-  }
-  
+  background-color: #d1d1d1;
+  margin: 0;
+  padding: 0;
+}
 
-  .error {
-    color: #f00;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .error-message {
-   margin-top: 200px;
-  }
-  
-  .error-container {
+.container {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+.fail {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fail h1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f00;
+}
+
+.fail p {
+  font-size: 16px;
+  color: #000;
+}
+
+.fail a {
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  .container {
     width: 100%;
-    margin: 0 auto;
+  }
+
+  .fail {
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-top: 300px;
+    top: 0;
+    left: 0;
   }
-  
-  .error-container > .error {
-    text-align: center;
+
+  .fail h1 {
+    font-size: 16px;
   }
-  
+}
+
+
+.error {
+  color: #f00;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.error-message {
+ margin-top: 200px;
+}
+
+.error-container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: 300px;
+}
+
+.error-container > .error {
+  text-align: center;
+}
+
+/* Estilos para pantallas grandes (PC) */
+.container {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 20px;
+padding: 20px;
+}
+
+/* Estilos para pantallas medianas (Tablets) */
+@media screen and (max-width: 768px) {
+.container {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+
+/* Estilos para pantallas pequeñas (Teléfonos) */
+@media screen and (max-width: 480px) {
+.container {
+    grid-template-columns: 1fr;
+}
+}

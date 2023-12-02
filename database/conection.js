@@ -21,7 +21,7 @@ db.serialize(() =>{
       console.log("Anexada de la tabla categorias exitosa!!!");
     }
   })
-const sql_create2="CREATE TABLE IF NOT EXISTS productos ( id INTEGER PRIMARY KEY AUTOINCREMENT, nombre varchar (25) NOT NULL, precio double NOT NULL, codigo int NOT NULL UNIQUE, descripcion varchar (60) NULL DEFAULT 'Sin descripcion', marca varchar (25) NOT NULL, deporte TEXT NOT NULL, categoria_id int, FOREIGN KEY (categoria_id) REFERENCES categorias (id));";
+const sql_create2="CREATE TABLE IF NOT EXISTS productos ( id INTEGER PRIMARY KEY AUTOINCREMENT, nombre varchar (25) NOT NULL, precio double NOT NULL, codigo INTEGER NOT NULL UNIQUE, descripcion varchar (60) NULL DEFAULT 'Sin descripcion', marca varchar (25) NOT NULL, deporte TEXT NOT NULL, categoria_id INTEGER, FOREIGN KEY (categoria_id) REFERENCES categorias (id));";
 db.run(sql_create2, err =>{
 
   if (err) {
@@ -30,7 +30,7 @@ db.run(sql_create2, err =>{
     console.log("Anexada de la tabla productos exitosa!!!");
   }
 })
-const sql_create3="CREATE TABLE IF NOT EXISTS imagenes ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, url TEXT NOT NULL, destacado TEXT NOT NULL, producto_id INT, FOREIGN KEY (producto_id) REFERENCES productos (id));";
+const sql_create3="CREATE TABLE IF NOT EXISTS imagenes ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, url TEXT NOT NULL, destacado TEXT NOT NULL, producto_id INTEGER, FOREIGN KEY (producto_id) REFERENCES productos (id));";
 db.run(sql_create3, err =>{
   if (err) {
     console.error (err.message);

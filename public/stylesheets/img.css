@@ -10,6 +10,7 @@ table {
   th, td {
     border: 1px solid #a0a0a0;
     padding: 5px;
+    text-align: center;
   }
   
   th {
@@ -58,3 +59,24 @@ table {
     margin-left: 10px;
   }
   
+  /* Estilos para pantallas grandes (PC) */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+/* Estilos para pantallas medianas (Tablets) */
+@media screen and (max-width: 768px) {
+  .container {
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Estilos para pantallas pequeñas (Teléfonos) */
+@media screen and (max-width: 480px) {
+  .container {
+      grid-template-columns: 1fr;
+  }
+}

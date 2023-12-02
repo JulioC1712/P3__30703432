@@ -1,12 +1,97 @@
 require ('dotenv').config();
 var express = require('express');
 var router = express.Router();
-
 const productosModel = require ('../models/admin')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/index', function(req, res, next) {
   res.render('index', { title: 'Login' });
+});
+
+
+//Pagina principal compras
+router.get('/', function(req, res, next){
+  productosModel
+    .obteneradmin()
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    }) 
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error cargando archivos')
+    })
+});
+
+//Busqueda nombre productos
+router.post('/search', function(req, res, next){
+  const {nombre} = req.body;
+  productosModel
+    .obtenerprdPorNombre(nombre)
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
+});
+
+//Busqueda descripcion productos
+router.post('/searchdescrp', function(req, res, next){
+  const {descripcion} = req.body;
+  productosModel
+    .obtenerprdPorDescripcion(descripcion)
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
+});
+
+//Filtrado de productos por categoria
+router.post('/filtroctg', function(req, res, next){
+  const {categoria} = req.body;  
+  console.log(req.body);
+  productosModel
+    .filtradoctg(categoria)
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
+});
+
+//Filtrado de productos por marcas
+router.post('/filtromarca', function(req, res, next){
+  const {marca} = req.body;
+  console.log(req.body); 
+  productosModel
+    .filtradomarca(marca)
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
+});
+
+//Filtrado de productos por deporte
+router.post('/filtrodp', function(req, res, next){
+  const {deporte} = req.body;  
+  console.log(req.body);
+  productosModel
+    .filtradodp(deporte)
+    .then(datos=>{
+      res.render('catalogo', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos')
+    })
 });
 
 //login a la pagina del administrador
@@ -308,4 +393,11 @@ router.get('/*', function(req, res, next) {
   res.render('error', { title: 'Error 404'});
 });
 */
+
+//Cerrar sesion
+router.get('logout', function (req, res, next){
+  req.session.destroy();
+  res.redirect('/');
+})
+
 module.exports = router;
