@@ -1,101 +1,101 @@
 body {
-  background-color: #d1d1d1;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  width: 500px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-header {
-  background-color: #000000;
-  height: 100px;
-  text-align: center;
-}
-footer {
-  background-color: #000000;
-  height: 50px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-
-.copyright {
-  margin-top: 20px;
-  color: #ffffff;
-  line-height: 3;
-}
-
-.admin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
- h1 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #ffffff;
-}
-
- p {
-  font-size: 16px;
-  color: #ffffff;
-}
-
-.admin a {
-  background-color: #000;
-  color: #fff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.admin a:not(:last-child) {
-  margin-right: 15px;
-}
-
-@media (max-width: 500px) {
+    background-color: #d1d1d1;
+    margin: 0;
+    padding: 0;
+  }
+  
   .container {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  header {
+    background-color: #000000;
+    height: 100px;
+    text-align: center;
+  }
+  footer {
+    background-color: #000000;
+    height: 50px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
     width: 100%;
   }
-
+  
+  
+  .copyright {
+    margin-top: 20px;
+    color: #ffffff;
+    line-height: 3;
+  }
+  
   .admin {
-    position: relative;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-
-  .admin h1 {
+  
+   h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+   p {
     font-size: 16px;
+    color: #ffffff;
   }
-}
-
-/* Estilos para pantallas grandes (PC) */
+  
+  .admin a {
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .admin a:not(:last-child) {
+    margin-right: 15px;
+  }
+  
+  @media (max-width: 500px) {
+    .container {
+      width: 100%;
+    }
+  
+    .admin {
+      position: relative;
+      top: 0;
+      left: 0;
+    }
+  
+    .admin h1 {
+      font-size: 16px;
+    }
+  }
+  
+  /* Estilos para pantallas grandes (PC) */
 .container {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-gap: 20px;
-padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
 }
 
 /* Estilos para pantallas medianas (Tablets) */
 @media screen and (max-width: 768px) {
-.container {
-    grid-template-columns: repeat(2, 1fr);
-}
+  .container {
+      grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Estilos para pantallas pequeñas (Teléfonos) */
 @media screen and (max-width: 480px) {
-.container {
-    grid-template-columns: 1fr;
-}
+  .container {
+      grid-template-columns: 1fr;
+  }
 }

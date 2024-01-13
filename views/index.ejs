@@ -7,18 +7,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <title>Inicio de Sesion</title>
 </head>
+<style>  a{
+  text-decoration: none;
+    }</style>
+
   <body>
     <header>
+      <a href="/registroClientes" style="color: white;">Registrarse</a>
+        <a href="/inicioSesionClientes" style="color: white;">Iniciar sesión : Cliente</a>
+        <a href="/"><h1 style="color: white;">Tienda Fitness</h1></a>
     </header>
     <div class="container">
     <form name="formulario" action="/login" method="post">
         <table class="form-register">
-          <caption align="top"><h1>Tienda Fitness</h1></caption>
+          <caption align="top"><h3>Inicio de sesión: Admin</h3></caption>
           <tr>
             <td class="texto"><h4>Usuario:</h4></td>
           </tr>
           <tr>
-              <td><input class="control" type="text" name="user" id="user" maxlength="20" placeholder="Ingrese el Usuario" required></td>
+              <td><input class="control" type="text" name="user" id="user" maxlength="20" placeholder="Ingrese el Usuario" required ></td>
           </tr> 
           <tr>
             <td class="texto"><h4>Contraseña:</h4></td>

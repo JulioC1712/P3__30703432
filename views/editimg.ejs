@@ -11,11 +11,11 @@
     <div>
         <form action="/updateimg/<%= imagenes.id %>" method="post">
             <input type="text" name="url" id="url" value="<%= imagenes.url %>"  minlength="3">
-            <select name="destacado" id="destacado">
-                <option value="">--Seleccione--</option>
-                <option value="Si">Si</option>
-                <option value="No">NO</option>
-            </select>
+            <select name="destacado" id="destacado" required>
+                <option value="" disabled>--Seleccione--</option>
+                <option value="Si" <%= imagenes.destacado === "Si" ? "selected" : "" %>>Si</option>
+                <option value="No" <%= imagenes.destacado === "No" ? "selected" : "" %>>No</option>
+              </select>
             <button type="submit" class="btn btn-primary">Actualizar Imagen</button>
         </form>
     </div>

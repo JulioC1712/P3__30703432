@@ -38,6 +38,22 @@ db.run(sql_create3, err =>{
     console.log("Anexada de la tabla imagenes exitosa!!!");
   }
 });
+const sql_create4= "CREATE TABLE IF NOT EXISTS registroClientes ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email text, password TEXT)"; 
+db.run(sql_create4, err =>{
+  if (err) {
+    console.error (err.message);
+  } else {
+    console.log("Anexada de la tabla registroclientes exitosa!!!");
+  }
+});
+const sql_create5= "CREATE TABLE IF NOT EXISTS transaccion ( transaccion_id text PRIMARY KEY, cantidad INTEGER,total_pagado FLOAT,fecha datetime,ip_cliente TEXT,cliente_id text,producto_id text,FOREIGN KEY(cliente_id) REFERENCES registroClientes(id),FOREIGN KEY(producto_id) REFERENCES productos(id))";
+db.run(sql_create5, err =>{
+  if (err) {
+    console.error (err.message);
+  } else {
+    console.log("Anexada de la tabla transaccion exitosa!!!");
+  }
+});
 })
 
 module.exports = db;

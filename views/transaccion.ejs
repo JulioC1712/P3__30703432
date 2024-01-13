@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/img.css">
+    <title>Transaccion</title>
+</head>
+<body>
+    <h1>Pagina transaccion  <%= transaccion.length %></h1>
+    <a href="/home">Home</a>
+    <a href="/categorias">Categorias</a>
+    <a href="/productos">Productos</a>
+    <a href="//imagenes">Imagenes</a>
+    <a href="/clientes">Clientes</a>
+    <a href="/transacciones">Transacciones</a>
+    <div>
+        <table border="1">
+            <caption>Transacciones</caption>
+            <tr>
+                <th>Nº</th>
+                <th>Id</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Ip Cliente</th>
+                <th>Id. Producto</th>
+                <th>Id. Cliente</th>  
+            </tr>
+            <tr>
+                <% if (transaccion && transaccion.length > 0) { %>
+                    <% for (let i = 0; i < transaccion.length; i++) { %>
+                      <tr>
+                        <td><%= (i + 1) %></td>
+                        <td><%= transaccion[i].transaccion_id %></td>
+                        <td><%= transaccion[i].cantidad %></td>
+                        <td><%= transaccion[i].total_pagado %> $</td>
+                        <td><%= transaccion[i].fecha %></td>
+                        <td><%= transaccion[i].ip_cliente %></td>
+                        <td><%= transaccion[i].producto_id %></td>
+                        <td><%= transaccion[i].cliente_id %></td>
+                      </tr> 
+                    <% } %>
+                  <% } else { %>
+                    <tr>
+                      <th>No hay transacciones en el sistema</th>
+                    </tr>
+                  <% } %>
+                  </table>
+    </div>
+
+</body>
+</html>

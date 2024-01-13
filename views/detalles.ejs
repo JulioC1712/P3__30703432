@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<style>
+      body{
+            background-color: #d1d1d1;
+        }
+    .product-card {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+  
+    .product-card img {
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .product-card h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  
+    .product-card h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  
+    .product-card p {
+      margin-bottom: 10px;
+    }
+  
+    .pay-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+  </style>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark"> 
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><strong><h1>Tienda Fit</h1></strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        </nav>
+        
+        </header>
+    <div class="product-card">
+        <img src="<%= productos.url %>" alt="">
+        <h1><%= productos.productoNombre %></h1>
+        <h2><%= productos.categoriaNombre %></h2>
+        <p>Precio: <%= productos.precio %></p>
+        <p>Marca: <%= productos.marca %></p>
+        <p>Deporte: <%= productos.deporte %></p>
+        <p>Descripción: <%= productos.descripcion %></p>
+        <a href="/pagar/<%= productos.id %>" class="pay-button">Pagar</a>
+      </div>
+</body>
+</html>

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="/stylesheets/catalogo.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
-
     <style>
         body{
             background-color: #d1d1d1;
@@ -38,7 +36,7 @@
             color: black;
         }
 table {
-    margin: 0 auto;
+    margin-top: 45%;
 }
 /* Estilos para pantallas grandes (PC) */
 .container {
@@ -61,6 +59,53 @@ table {
         grid-template-columns: 1fr;
     }
 }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.product-grid {
+  margin-top: 15%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  grid-gap: 10px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #f2f2f2;
+  height: 100%;
+}
+
+.product-card-header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-card-body {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.product-card-footer {
+  padding: 10px;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
     </style>
 </head>
 
@@ -69,13 +114,9 @@ table {
 
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     
-            <div class="caja">
-                <h1>Tienda Fit</h1>
-            </div>
-    
     
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><strong>Pagina Reporte</strong></a>
+                <a class="navbar-brand" href="/"><strong><h1>Tienda Fit</h1></strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -85,70 +126,68 @@ table {
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav nav justify-content-center">
                         <li class="nav-item">
-                            <form action="/search" method="post">
+                            <form action="/buscar" method="post">
                                 <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre del producto" >
-                                <button type="submit" class="btn btn-outline-primary">Buscar</button>
-                            </form>
-                        </li>
-                        <li class="nav-item">
-                            <form action="/searchdescrp" method="post">
                                 <input type="text" name="descripcion" id="descripcion" placeholder="Ingrese una descripcion del producto" >
-                                <button type="submit" class="btn btn-outline-primary">Buscar</button>
-                            </form>
-                        </li>
-                        <li class="nav-item">
-                            <form action="/filtroctg" method="post">
                                 <select name="categoria" id="categoria">
-                                    <option value="" >--Categorias--</option>
+                                    <option value="">--Categorias--</option>
                                     <% if (datos) { %>
-                                        <% for (let i = 0; i < datos.length; i++){  %>
-                                            <% if (datos) { %>
-                                                <option value="<%= datos[i].categoriaNombre %>" name="categoria" id="categoria"><%= datos[i].categoriaNombre %></option>
-                                            <% } %>
+                                      <% const categorias = new Set(); %>
+                                      <% for (let i = 0; i < datos.length; i++){  %>
+                                        <% const categoria = datos[i].categoriaNombre; %>
+                                        <% if (!categorias.has(categoria)) { %>
+                                          <option value="<%= categoria %>"><%= categoria %></option>
+                                          <% categorias.add(categoria); %>
                                         <% } %>
+                                      <% } %>
                                     <% } else { %>
-                                        <option value="">No existen productos en el sistema</option>
-                                    <% }   %>
-                                </select>
-                                <button type="submit" class="btn btn-outline-primary">Filtrar productos</button>
-                            </form>
-
-                            <form action="/filtromarca" method="post">
-                                <select name="marca" id="marca">
-                                    <option value="" >--Marcas--</option>
+                                      <option value="">No existen productos en el sistema</option>
+                                    <% } %>
+                                  </select>
+                                  
+                                  <select name="marca" id="marca">
+                                    <option value="">--Marcas--</option>
                                     <% if (datos) { %>
-                                        <% for (let i = 0; i < datos.length; i++){  %>
-                                            <% if (datos) { %>
-                                                <option value="<%= datos[i].marca %>"><%= datos[i].marca %></option>
-                                            <% } %>
+                                      <% const marcas = new Set(); %>
+                                      <% for (let i = 0; i < datos.length; i++){  %>
+                                        <% const marca = datos[i].marca; %>
+                                        <% if (!marcas.has(marca)) { %>
+                                          <option value="<%= marca %>"><%= marca %></option>
+                                          <% marcas.add(marca); %>
                                         <% } %>
+                                      <% } %>
                                     <% } else { %>
-                                        <option value="">No existen productos en el sistema</option>
-                                    <% }   %>
-                                </select>
-                                <button type="submit" class="btn btn-outline-primary">Filtrar productos</button>
-                            </form>
-
-                            <form action="/filtrodp" method="post">
-                                <select name="deporte" id="deporte">
-                                    <option value="" >--Deporte--</option>
+                                      <option value="">No existen productos en el sistema</option>
+                                    <% } %>
+                                  </select>
+                                  
+                                  <select name="deporte" id="deporte">
+                                    <option value="">--Deporte--</option>
                                     <% if (datos) { %>
-                                        <% for (let i = 0; i < datos.length; i++){  %>
-                                            <% if (datos) { %>
-                                                <option value="<%= datos[i].deporte %>"><%= datos[i].deporte %></option>
-                                            <% } %>
+                                      <% const deportes = new Set(); %>
+                                      <% for (let i = 0; i < datos.length; i++){  %>
+                                        <% const deporte = datos[i].deporte; %>
+                                        <% if (!deportes.has(deporte)) { %>
+                                          <option value="<%= deporte %>"><%= deporte %></option>
+                                          <% deportes.add(deporte); %>
                                         <% } %>
+                                      <% } %>
                                     <% } else { %>
-                                        <option value="0">No existen productos en el sistema</option>
-                                    <% }   %>
-                                </select>
-                                <button type="submit" class="btn btn-outline-primary">Filtrar productos</button>
+                                      <option value="">No existen productos en el sistema</option>
+                                    <% } %>
+                                  </select>
+                                <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                                <a href="/" class="btn btn-outline-primary">Reestablecer</a>
                             </form>
-
                         </li>
                         <li class="nav-item">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                             <a class="nav-link btn btn-outline-primary" href="/index">Pagina Administrador</a>
+                          <% if (userId == null) { %>
+                             <a class="nav-link btn btn-outline-primary" href="/inicioSesionClientes">Iniciar sesión</a>
+                             <% } else { %>
+                              <a class="nav-link btn btn-outline-primary" href="/logout">Cerrar sesión</a>
+                            <%   } %>
+                            
                         </div>
                         </li>
                     </ul>
@@ -158,90 +197,104 @@ table {
         </header>
    <div>
         <div class="titulo">
-            <h2>Catalogo de productos</h2>
-        </div>
- <div class="btn-group" role="group" aria-label="Vista de Productos">
-    <input type="radio" class="btn-check" name="vistaProducto" id="btnCuadricula" autocomplete="off" checked>
-    <label class="btn btn-outline-primary" for="btnCuadricula">Cuadricula</label>
-    <input type="radio" class="btn-check" name="vistaProducto" id="btnLista" autocomplete="off">
-    <label class="btn btn-outline-primary" for="btnLista">Lista</label>
- </div>
-
-    <div>
-        <table border="2" class="container">
-            <!-- <caption><h1>Reporte General</h1></caption> -->
-            <tr>
-                <th><p>Nombre</p></th>
-                <th><p>Precio</p></th>
-                <th><p>Marca</p></th>
-                <th><p>Deporte</p></th>
-                <th><p>Descripcion</p></th>
-                <th><p>Categoria</p></th>
-                <th><p>Imagen</p></th>
-                <th><p>Accion</p></th>
-            </tr>
-            <tr>
-               <% if (datos) { %>
-                    <% for (let i = 0; i < datos.length; i++){  %>
-                            <tr>
-                                <td><%= datos[i].productoNombre %></td>
-                                <td><%= datos[i].precio %>$</td>
-                                <td><%= datos[i].marca %></td>
-                                <td><%= datos[i].deporte %></td>
-                                <td><%= datos[i].descripcion %></td>
-                                <td><%= datos[i].categoriaNombre %></td>
-                                <td><img class="imagen-producto" src="<%= datos[i].url %>"></td>
-                                <td><a class="btn btn-success">Comprar</a></td>
-                            </tr>    
-                    <% } %>
-                <% } else { %>
+            <h2>Catálogo de productos</h2>
+            <div class="d-flex justify-content-center">
+                <div class="btn-group" role="group" aria-label="Vista de Productos">
+                  <input type="radio" class="btn-check" name="vistaProducto" id="btnCuadricula" autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="btnCuadricula">Cuadricula</label>
+                  <input type="radio" class="btn-check" name="vistaProducto" id="btnLista" autocomplete="off">
+                  <label class="btn btn-outline-primary" for="btnLista">Lista</label>
+                </div>
+              </div>
+              <div class="container">
+                <div id="product-grid" class="product-grid">
+                  <% if (datos && datos.length > 0) { %>
+                    <% datos.forEach(function(producto) { %>
+                      <a href="/detalles/<%= producto.id%>">
+                      <div class="product-card">
+                        <div class="product-card-header">
+                          <img src="<%= producto.url %>" alt="<%= producto.productoNombre %>">
+                        </div>
+                        <div class="product-card-body">
+                         <h6><%= producto.productoNombre %></h6>
+                        </div>
+                        <div class="product-card-footer">
+                          <span><%= producto.precio %> $</span>
+                        </div>
+                      </div>
+                    </a>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No se encontraron productos.</p>
+                  <% } %>
+                </div>
+                
+      <table id="product-list" class="container" style="display: none;" border="2">
+        <tr>
+            <th><p>Nombre</p></th>
+            <th><p>Precio</p></th>
+            <th><p>Marca</p></th>
+            <th><p>Deporte</p></th>
+            <th><p>Descripcion</p></th>
+            <th><p>Categoria</p></th>
+            <th><p>Imagen</p></th>
+            <th><p>Accion</p></th>
+        </tr>
+        <tr>
+           <% if (datos) { %>
+                <% for (let i = 0; i < datos.length; i++){  %>
                         <tr>
-                            <th><p>No hay productos en el sistema</p></th>
-                        </tr>
-                    <% }   %>
-            </tr>
-        </table>
-    </div>
-</div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                            <td><%= datos[i].productoNombre %></td>
+                            <td><%= datos[i].precio %></td>
+                            <td><%= datos[i].marca %></td>
+                            <td><%= datos[i].deporte %></td>
+                            <td><%= datos[i].descripcion %></td>
+                            <td><%= datos[i].categoriaNombre %></td>
+                            <td><img class="imagen-producto" src="<%= datos[i].url %>" style="max-width: 150px; max-height: 150px;" ></td>
+                            <td><a href="/detalles/<%=datos[i].id %>" class="btn btn-success">Comprar</a></td>
+                        </tr>    
+                <% } %>
+            <% } else { %>
+                    <tr>
+                        <th><p>No hay productos en el sistema</p></th>
+                    </tr>
+                <% }   %>
+        </tr>
+    </table>
+  </div>
+  <script>
+    const btnCuadricula = document.getElementById('btnCuadricula');
+    const btnLista = document.getElementById('btnLista');
+    const productGrid = document.getElementById('product-grid');
+    const productList = document.getElementById('product-list');
+  
+    
+    const selectedView = localStorage.getItem('selectedView');
+    if (selectedView === 'list') {
+      btnLista.checked = true;
+      productGrid.style.display = 'none';
+      productList.style.display = 'table';
+    }
+  
+    btnCuadricula.addEventListener('click', function() {
+      productGrid.style.display = 'grid';
+      productList.style.display = 'none';
+     
+      localStorage.setItem('selectedView', 'grid');
+    });
+  
+    btnLista.addEventListener('click', function() {
+      productGrid.style.display = 'none';
+      productList.style.display = 'table';
+   
+      localStorage.setItem('selectedView', 'list');
+    });
+  </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function(){
-                const btnCuadricula = document.getElementById("btnCuadricula");
-                const btnLista = document.getElementById("btnLista");
-                const Container = document.querySelector(".row.row-cols-1.row-cols-md-3.g-4");
-
-                //Verificar si hay un estado guardado en el almacenamiento local
-                const estadoGuardado = localStorage.getItem("estadoVista");
-                if (estadoGuardado === "cuadricula"){
-                    Container.classList.remove("row-cols-md-1");
-                    Container.classList.add("row-cols-md-3");
-                } else if (estadoGuardado === "lista"){
-                    Container.classList.remove("row-cols-md-3");
-                    Container.classList.add("row-cols-md-1");
-                }
-
-                btnCuadricula.addEventListener("click", function(){
-                    Container.classList.remove("row-cols-md-1");
-                    Container.classList.add("row-cols-md-3");
-
-                    //guardar el estado seleccionado en el almacenamiento local
-                    localStorage.setItem("estadoVista", "cuadricula");
-                });
-
-                btnLista.addEventListener("click", function() {
-                    Container.classList.remove("row-cols-md-3");
-                    Container.classList.add("row-cols-md-1");
-
-                    //guardar el estado seleccionado en el almacenamiento local
-                    localStorage.setItem("estadoVista", "Lista");
-                });
-            });
-        </script>
 </body>
 </html>

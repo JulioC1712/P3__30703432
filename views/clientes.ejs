@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/img.css">
+    <title>Clientes</title>
+</head>
+<body>
+    <h1>Pagina Clientes  <%= Clientes.length %></h1>
+    <a href="/home">Home</a>
+    <a href="/categorias">Categorias</a>
+    <a href="/productos">Productos</a>
+    <a href="//imagenes">Imagenes</a>
+    <a href="/Clientes">Clientes</a>
+    <a href="/transacciones">Transacciones</a>
+    <div>
+        <table border="1">
+            <caption>Clientes</caption>
+            <tr>
+                <th>N°</th>
+                <th>Correo</th>
+            </tr>
+            <tr>
+                <% if (Clientes) { %>
+                    <% for (let i = 0; i < Clientes.length; i++){  %>
+                        <% if (Clientes) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= Clientes[i].email %></td>
+                            </tr>    
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                        <tr>
+                            <th>No hay Clientes en el sistema</th>
+                        </tr>
+                    <% }   %>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
