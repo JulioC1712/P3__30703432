@@ -444,7 +444,7 @@ router.get('/registroClientes', recaptcha.middleware.render, (req, res)  =>{
     res.redirect('/home')
   } else {
     if (req.session.userId == null) {
-      res.render('registroClientes.ejs' , { captcha: res.recaptcha })
+      res.render('registroclientes' , { captcha: res.recaptcha })
   } else {
     res.redirect('/')
   }
@@ -629,12 +629,12 @@ router.post('/payments', async (req, res) => {
     res.redirect("/transaccion");
   })
   .catch(error=>{
-    res.render('transaccionRes', { error, datos : null, idProducto });
+    res.render('transaccionres', { error, datos : null, idProducto });
     console.log(error);
   })
   
   } catch (error) {
-    res.render('transaccionRes', { error, datos : null, idProducto });
+    res.render('transaccionres', { error, datos : null, idProducto });
     console.log(error);
   }
 });
@@ -646,7 +646,7 @@ router.get('/transaccion', (req, res) => {
   } else {
     const datos = req.session.datos;
 
-    res.render('transaccionRes', { datos, error: null });
+    res.render('transaccionres', { datos, error: null });
   
     delete req.session.datos;
   }
