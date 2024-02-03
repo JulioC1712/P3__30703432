@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/img.css">
+    <title>Compras realizadas</title>
+</head>
+<body>
+    <h1>Productos comprados por calificar:  <%= datos.length %></h1>
+    <a href="/">Inicio</a>
+    <div>
+        <table border="1">
+            <tr>
+                <th>N°</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Total pagado</th>
+                <th>Fecha</th>
+                <th>Calificación</th>
+            </tr>
+            <tr>
+                <% if (datos) { %>
+                    <% for (let i = 0; i < datos.length; i++){  %>
+                        <% if (datos) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><img src="<%= datos[i].url %>"></td>
+                                <td><%= datos[i].nombre %></td>
+                                <td><%= datos[i].cantidad %></td>
+                                <td><%= datos[i].total_pagado %></td>
+                                <td><%= datos[i].fecha %></td>
+                                <td> <a href="/calificar/<%= datos[i].id %>">Calificar</a></td>
+                            </tr>    
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                        <tr>
+                            <th>No hay Clientes en el sistema</th>
+                        </tr>
+                    <% }   %>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

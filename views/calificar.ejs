@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/img.css">
+    <title>Calificación</title>
+</head>
+<body>
+    <h1>Califica el producto  <%= producto.length %></h1>
+    <a href="/">Inicio</a>
+    <div>
+        <div class="header">
+            <h2>Calificacion del Producto</h2>
+            <hr>
+        </div>
+        <img src="<%= producto.url %>" class="imagen-producto">
+        <form action="/calificacion" method="post">
+            <hr><h4 for="nombre">Calificacion del Producto:</h4>
+            <input type="text" name="nombre" id="nombre" value=" <%= producto.nombre %>" readonly>
+          <input style="display: none;" type="text" name="producto_id" id="producto_id" value="<%= producto.id %>" readonly>
+            <hr> <h4 for="Calificar">¿Que tan sactifactorio ha sido el Uso del Producto?</h4>
+            <input type="range" name="puntos" id="puntos" value="5" min="1" max="5" onInput="this.nextElementSibling.value = this.value">
+            <output>5</output>                
+            <div style="margin-top: 10px; margin-bottom: 10px;"><button type="submit" class="btn btn-primary">Calificar</button></div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

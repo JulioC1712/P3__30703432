@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <title>Registro</title>
+  <title>Recuperación</title>
 </head>
 <style>
-    a{
+   a{
 text-decoration: none;
   }
 </style>
@@ -20,9 +19,9 @@ text-decoration: none;
         <a href="/"><h1 style="color: white;">Tienda Fitness</h1></a>
     </header>
     <div class="container">
-    <form name="formulario" action="/registroclientes" method="post">
+    <form name="formulario" action="/recuperar" method="post">
         <table class="form-register">
-          <caption align="top"><h3>Registro</h3></caption>
+          <caption align="top"><h3>Recuperar</h3></caption>
           <tr>
             <td class="texto"><h4>Correo:</h4></td>
           </tr>
@@ -30,14 +29,6 @@ text-decoration: none;
               <td><input class="control" type="email" name="email" id="email" placeholder="Ingrese el correo" required></td>
           </tr> 
           <tr>
-            <td class="texto"><h4>Contraseña:</h4></td>
-          </tr>
-          <tr>
-              <td><input class="control" type="password" name="password" id="password" minlength="6" maxlength="10" placeholder="Ingrese la Contraseña" required></td>
-          </tr>
-          <tr>
-            <td><div class="g-recaptcha" data-sitekey="6LdX3k8pAAAAADdUiCYy7BxmUdths4Vjwru4pZdo"></div></td>
-          </tr>
         </table>
         <input class="botons" type="submit" value="Registrarse">
     </form>

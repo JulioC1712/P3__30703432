@@ -174,7 +174,7 @@ module.exports = {
         });
       },
   
-    buscarProductos(nombre, categoria, descripcion, marca, deporte) {
+    buscarProductos(nombre, categoria, descripcion, marca, deporte, promedio) {
         return new Promise((resolve, reject) => {
           let sql = 'SELECT productos.id, productos.nombre AS productoNombre, productos.precio, productos.codigo, productos.descripcion, productos.marca, productos.deporte, categorias.nombre AS categoriaNombre, imagenes.url, imagenes.destacado FROM productos INNER JOIN categorias ON productos.categoria_id = categorias.id INNER JOIN imagenes ON productos.id = imagenes.producto_id where 1=1';
     
@@ -203,6 +203,21 @@ module.exports = {
             sql += " AND productos.deporte LIKE '%' || ? || '%'";
             params.push(deporte);
           }
+          if (promedio) {
+            switch (promedio) {
+              case 'menos-de-3':
+                sql += " AND productos.promedio < 3";
+                break;
+              case '3-a-4':
+                sql += " AND productos.promedio >= 3 AND productos.promedio <= 4";
+                break;
+              case 'mayor-o-igual-a-4':
+                sql += " AND productos.promedio >= 4";
+                break;
+              default:
+                break;
+            }
+          }
     
           db.all(sql, params, (err, datos) => {
             if (err) {
@@ -225,7 +240,7 @@ module.exports = {
           });
         });
       },
-      obtenerTransacciones() {
+      obtenerTransaccion() {
         return new Promise((resolve, reject) => {
           const sql = 'SELECT * FROM transaccion';
           db.all(sql, (err, resultados) => {
@@ -239,7 +254,7 @@ module.exports = {
       },
       obteneradminPorId(id) {
         return new Promise ((resolve, reject) =>{
-            const sql = 'SELECT productos.id, productos.nombre AS productoNombre, productos.precio, productos.codigo, productos.descripcion, productos.marca, productos.deporte, categorias.nombre AS categoriaNombre, imagenes.url, imagenes.destacado FROM productos INNER JOIN categorias ON productos.categoria_id = categorias.id INNER JOIN imagenes ON productos.id = imagenes.producto_id WHERE productos.id = ?';
+            const sql = 'SELECT productos.id, productos.nombre AS productoNombre, productos.precio, productos.codigo, productos.descripcion, productos.marca, productos.deporte, productos.promedio, categorias.nombre AS categoriaNombre, imagenes.url, imagenes.destacado FROM productos INNER JOIN categorias ON productos.categoria_id = categorias.id INNER JOIN imagenes ON productos.id = imagenes.producto_id WHERE productos.id = ?';
             db.get (sql, id, (err, resultados) =>{
                 if (err) reject (err);
                 else {
@@ -262,7 +277,7 @@ module.exports = {
   obtenerClientesPorId(id) {
     return new Promise((resolve, reject) => {
       const sql = 'SELECT * FROM registroClientes where id=?';
-      db.all(sql, id, (err, resultados) => {
+      db.get(sql, [id], (err, resultados) => {
         if (err) {
           reject(err);
         } else {
@@ -282,5 +297,70 @@ module.exports = {
         }
       });
     });
-  }
+  },
+  recuperarclave(email){
+    return new Promise ((resolve, reject)=>{
+        const sql= 'SELECT email, id from registroClientes WHERE email=?'
+        db.all (sql, [email], (err, resultados)=>{
+            if (err) reject(err);
+            else {
+                resolve (resultados)};
+        })
+    })
+},
+restablecerclave(password, cliente_id){
+  return new Promise ((resolve, reject)=>{
+      const sql = 'UPDATE registroClientes SET password = ? WHERE id = ?'
+      db.run(sql, [password, cliente_id], (err, resultados)=>{
+          if (err) reject (err);
+          else resolve (resultados);
+      })
+  })
+},
+obtenertransaccionPorCliente(cliente_id){
+  return new Promise ((resolve, reject)=>{
+      const sql = 'SELECT transaccion.cantidad, transaccion.total_pagado, transaccion.fecha, productos.id, productos.nombre , imagenes.url FROM transaccion LEFT JOIN calificaciones ON transaccion.cliente_id = calificaciones.cliente_id AND transaccion.producto_id = calificaciones.producto_id INNER JOIN productos ON productos.id = transaccion.producto_id INNER JOIN imagenes ON productos.id = imagenes.producto_id WHERE calificaciones.cliente_id ISNULL AND calificaciones.producto_id ISNULL AND transaccion.cliente_id = ?';
+      db.all(sql, [cliente_id], (err, resultados)=>{
+          if (err) reject (err);
+          else{ 
+              console.log(JSON.stringify(resultados, null, 4));
+              resolve (resultados)};
+      });
+  });
+},
+obtenerprdconimgPorId(id){
+  return new Promise ((resolve, reject)=>{
+      const sql = 'SELECT productos.id, productos.nombre, imagenes.url FROM productos INNER JOIN imagenes ON imagenes.producto_id = productos.id WHERE productos.id = ?';
+      db.get(sql, [id], (err, resultados)=>{
+          if (err) reject(err);
+          else resolve(resultados);
+      });
+  });
+},
+//Insertar calificacion del producto, saca el promedio y lo inserta en la tabla de productos
+calificarprd(puntos, cliente_id, producto_id){
+  return new Promise((resolve, reject) => {
+      const sql='INSERT INTO calificaciones (puntos, cliente_id, producto_id) VALUES (?, ?, ?)';
+      const sql2= 'SELECT AVG(puntos) AS promedio FROM calificaciones WHERE producto_id = ?';
+      const sql3= 'UPDATE productos SET promedio = ? WHERE id = ?';
+      db.run(sql, [puntos, cliente_id, producto_id], (err, resultados)=>{
+          if (err) reject (err);
+          else{
+              db.all(sql2, [producto_id], (err, calificacion)=>{
+                  if (err) reject (err);
+                  else{
+                      promedio = calificacion[0].promedio;
+                      console.log(promedio);
+                      db.run(sql3, [promedio, producto_id], (err)=>{
+                          if (err) reject (err);
+                          else{
+                              resolve (resultados);
+                          }
+                      });    
+                  }
+              });
+          } 
+      });
+  })
+},
 };

@@ -5,9 +5,18 @@ const productosModel = require ('../models/admin')
 var app = express();
 var Recaptcha = require('express-recaptcha').RecaptchaV2;
 var axios = require('axios');
+var nodemailer = require ('nodemailer');
 const recaptcha = new Recaptcha('6LdX3k8pAAAAADdUiCYy7BxmUdths4Vjwru4pZdo', '6LdX3k8pAAAAAOW0GS-Oc1OhOcK8EBrGTMmHEReZ');
 app.use(recaptcha.middleware.verify);
 app.use(express.json());
+const transporter = nodemailer.createTransport({ 
+  service: 'gmail', 
+  auth: { 
+    user: process.env.email, 
+    pass: process.env.clave_email
+  } });
+
+
 router.get('/login', function(req, res, next) {
   if (req.session.auth) {
     res.redirect("/home");
@@ -35,10 +44,10 @@ router.get('/', function(req, res, next){
 //Busqueda productos
 router.post('/buscar', (req, res) => {
   const userId = req.session.userId;
-  const { nombre, categoria, descripcion, marca, deporte } = req.body;
+  const { nombre, categoria, descripcion, marca, deporte, promedio } = req.body;
 
   productosModel
-  .buscarProductos(nombre, categoria, descripcion, marca, deporte)
+  .buscarProductos(nombre, categoria, descripcion, marca, deporte, promedio)
     .then(datos => {
       res.render("catalogo", { datos, userId});
     })
@@ -465,6 +474,18 @@ router.post('/registroClientes', (req, res) => {
           if (cliente) {
             return res.redirect('/inicioSesionClientes');
           } else {
+            const mailOptions = { 
+              from: process.env.email, 
+              to: email, 
+              subject: `Registro completado`, 
+              text: `Hola.\nBienvenido a Tienda Fitness\n\nSu registro ha sido realizado correctamente.` 
+            };
+      
+            transporter.sendMail(mailOptions, function(error, info){ 
+              if (error) { console.log(error); 
+              } else { 
+                console.log('Correo electrónico de registro exitoso:  ' + info.response); 
+            }});
             productosModel.insertarCliente(email, password)
               .then(() => {
                 req.session.userId = this.lastID;
@@ -593,6 +614,8 @@ router.post('/payments', async (req, res) => {
     name: fullName,
     "card-number": tarjeta,
     precio,
+    nombre, 
+    email,
     id: idProducto,
     idCliente: idCliente,
     cantidad
@@ -626,6 +649,19 @@ router.post('/payments', async (req, res) => {
    productosModel
    .insertarTransaccion(transactionId, cantidad, amount, date, ip_cliente, reference, description)
    .then(datos=>{
+    const mailOptions = { 
+      from: process.env.email, 
+      to: email, 
+      subject: `Compra completada`, 
+      text: `¡Hola, ${fullName}!\n\nGracias por tu compra.\nDetalles:\n\nTransacción: ${transactionId}\nProducto: ${nombre} \nCantidad: ${cantidad}\nTotal pagado: ${precioProducto} USD\n\nGracias por elegirnos. ¡Esperamos verte pronto de nuevo!`
+
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){ 
+      if (error) { console.log(error); 
+      } else { 
+        console.log('Correo electrónico de compra de contraseña enviado: ' + info.response); 
+    }});
     res.redirect("/transaccion");
   })
   .catch(error=>{
@@ -642,7 +678,7 @@ router.get('/transaccion', (req, res) => {
   if (req.session.userId == null) {
     res.redirect("/");
   } else if (req.session.auth) {
-    res.redirect("/administrador");
+    res.redirect("/home");
   } else {
     const datos = req.session.datos;
 
@@ -651,6 +687,136 @@ router.get('/transaccion', (req, res) => {
     delete req.session.datos;
   }
 });
+
+router.get('/recuperar', function(req, res, next){
+  if (req.session.userId) {
+    res.redirect("/");
+  } else if (req.session.auth) {
+    res.redirect("/home");
+  } else {
+  res.render('recuperar');
+  }
+});
+
+router.post('/recuperar', function(req, res, next){
+  const {email} = req.body;
+  productosModel
+    .recuperarclave(email)
+    .then(datos=>{
+      req.session.link = true;
+      const mailOptions = { 
+        from: process.env.email, 
+        to: datos[0].email, 
+        subject: `Restablecer Contraseña`, 
+        text: `Hola, has solicitado restablecer tu contraseña.\n
+        Haz clic en el siguiente enlace para continuar: ${process.env.base_url}/recuperacion/${datos[0].id}` 
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){ 
+        if (error) { console.log(error); 
+        } else { 
+          console.log('Correo electrónico de recuperacion de contraseña enviado: ' + info.response); 
+      }});
+      res.send('Correo electrónico de recuperacion de contraseña enviado');
+    }) 
+    .catch(err=>{
+      console.error(err.message);
+      return res.redirect('/recuperar');
+    })
+});
+
+//Pagina restablecer contraseña
+router.get('/recuperacion/:id', function(req, res, next){
+  const id= req.params.id;
+  if (req.session.userId) {
+    res.redirect("/");
+  } else if (req.session.auth) {
+    res.redirect("/home");
+  } else {
+    if (req.session.link) {
+      productosModel
+      .obtenerClientesPorId(id)
+      .then(datos=>{
+        res.render('recuperacion', {datos: datos});
+      })
+      .catch(err=>{
+        console.error(err.message);
+        return res.status(500).send('No se encuentra ese cliente')
+      })
+    } else {
+      res.redirect('/recuperar');
+    }
+  }
+});
+
+//Restablecer Contraseña
+router.post('/recuperacion/:id', function(req, res, next){
+  const cliente_id= req.params.id;
+  console.log(cliente_id);
+  req.session.link = false;
+  const {password} = req.body;
+    productosModel
+    .restablecerclave(password, cliente_id)
+    .then(()=>{
+      res.send('Contraseña recuperada de manera exitosa');
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error restableciendo contraseña');
+    })
+});
+router.get('/productos-comprados', function(req, res, next){
+  if (req.session.userId) {
+    const cliente_id = req.session.userId;
+    console.log(cliente_id);
+    productosModel
+    .obtenertransaccionPorCliente(cliente_id)
+    .then(datos=>{
+      res.render('listacomprados', {datos: datos});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando archivos');
+    })
+  } else{
+    res.redirect('/inicioSesionClientes');
+  }
+})
+
+//Pagina para calificar un producto
+router.get('/calificar/:id', function(req, res, next){
+  if (req.session.userId){
+    const id = req.params.id;
+    productosModel
+    .obtenerprdconimgPorId(id)
+    .then(producto=>{
+      res.render('calificar', {producto:producto});
+    })
+    .catch(err=>{
+      console.error(err.message);
+      return res.status(500).send('Error buscando productos');
+    })
+  }else{
+    res.redirect('/inicioSesionClientes');
+  }
+});
+
+//Califar producto
+router.post('/calificacion', function(req, res, next){
+  const {producto_id, puntos}= req.body;
+  const cliente_id = req.session.userId;
+  productosModel
+  .calificarprd(puntos, cliente_id, producto_id)
+  .then(idProductoCalificado=>{
+    res.redirect('/productos-comprados');
+  })
+  .catch(err=>{
+    console.error(err.message);
+    return res.status(500).send('Error calificando productos');
+  })
+});
+
+
 router.get('/*', function(req, res, next) {
   res.render('error', { title: 'Error 404'});
 });

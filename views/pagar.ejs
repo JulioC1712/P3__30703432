@@ -71,6 +71,9 @@ integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2
         <input  style="display:none;" type="text" id="id" name="id" value="<%= productos.id %>" readonly>
       </div>
       <div>
+        <input style="display:none;" type="email" id="email" name="email" value="<%= clientes.email %>" readonly>
+      </div>
+      <div>
         <input style="display:none;" type="text" id="idCliente" name="idCliente" value="<%= userId %>" readonly>
       </div>
       <div>
@@ -79,7 +82,7 @@ integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2
       </div>
       <div>
         <label for="name">Nombre:</label>
-        <input type="text" name="name" id="name" placeholder="Ingrese su nombre" value="<%= clientes.email %>" maxlength="255" required>
+        <input type="text" name="name" id="name" placeholder="Ingrese su nombre" maxlength="255" required>
       </div>
       <div>
         <label for="card-number">Número de Tarjeta:</label>
