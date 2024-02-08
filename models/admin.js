@@ -300,8 +300,8 @@ module.exports = {
   },
   recuperarclave(email){
     return new Promise ((resolve, reject)=>{
-        const sql= 'SELECT email, id from registroClientes WHERE email=?'
-        db.all (sql, [email], (err, resultados)=>{
+        const sql= 'SELECT * from registroClientes WHERE email=?'
+        db.get(sql, [email], (err, resultados)=>{
             if (err) reject(err);
             else {
                 resolve (resultados)};
@@ -362,5 +362,5 @@ calificarprd(puntos, cliente_id, producto_id){
           } 
       });
   })
-},
+}
 };

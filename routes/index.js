@@ -698,36 +698,40 @@ router.get('/recuperar', function(req, res, next){
   }
 });
 
-router.post('/recuperar', function(req, res, next){
-  const {email} = req.body;
+router.post('/recuperar', function(req, res, next) {
+  const { email } = req.body;
   productosModel
     .recuperarclave(email)
-    .then(datos=>{
-      req.session.link = true;
-      const mailOptions = { 
-        from: process.env.email, 
-        to: datos[0].email, 
-        subject: `Restablecer Contraseña`, 
-        text: `Hola, has solicitado restablecer tu contraseña.\n
-        Haz clic en el siguiente enlace para continuar: ${process.env.base_url}/recuperacion/${datos[0].id}` 
-      };
+    .then(datos => {
+      if (datos) {
+        req.session.link = true;
+        const mailOptions = {
+          from: process.env.email,
+          to: datos.email,
+          subject: 'Restablecer Contraseña',
+          text: `Hola, has solicitado restablecer tu contraseña.\nHaz clic en el siguiente enlace para continuar: \n\n ${process.env.base_url}/recuperacion/${datos.id}`
+        };
 
-      transporter.sendMail(mailOptions, function(error, info){ 
-        if (error) { console.log(error); 
-        } else { 
-          console.log('Correo electrónico de recuperacion de contraseña enviado: ' + info.response); 
-      }});
-      res.send('Correo electrónico de recuperacion de contraseña enviado');
-    }) 
-    .catch(err=>{
+        transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Correo electrónico de recuperación de contraseña enviado: ' + info.response);
+          }
+        });
+        res.send('Correo electrónico de recuperación de contraseña enviado');
+      } else {
+        res.send('No se encontró ningún cliente con ese correo electrónico');
+      }
+    })
+    .catch(err => {
       console.error(err.message);
       return res.redirect('/recuperar');
-    })
+    });
 });
-
 //Pagina restablecer contraseña
 router.get('/recuperacion/:id', function(req, res, next){
-  const id= req.params.id;
+  const id = req.params.id;
   if (req.session.userId) {
     res.redirect("/");
   } else if (req.session.auth) {
@@ -741,8 +745,8 @@ router.get('/recuperacion/:id', function(req, res, next){
       })
       .catch(err=>{
         console.error(err.message);
-        return res.status(500).send('No se encuentra ese cliente')
-      })
+        return res.status(500).send('No se encuentra ese cliente');
+      });
     } else {
       res.redirect('/recuperar');
     }

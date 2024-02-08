@@ -19,7 +19,7 @@ text-decoration: none;
         <a href="/"><h1 style="color: white;">Tienda Fitness</h1></a>
     </header>
     <div class="container">
-    <form name="formulario" action="/recuperacion/<%= datos[0].id %>" method="post">
+    <form name="formulario" action="/recuperacion/<%= datos.id %>" method="post">
         <table class="form-register">
           <caption align="top"><h3>Recuperación</h3></caption>
           <tr>
@@ -29,7 +29,7 @@ text-decoration: none;
             <td><input class="control" type="password" name="password" id="password" minlength="6" maxlength="10" placeholder="Ingrese la Contraseña" required></td>
         </tr>
         </table>
-        <input class="botons" type="submit" value="Registrarse">
+        <input class="botons" type="submit" value="Recuperar">
     </form>
   </div>
     <footer>
